@@ -40,8 +40,7 @@ public class TicketController {
 	 * 
 	 * @param ticket
 	 * @return added ticket
-	 * @throws AccessForbiddenException
-	 * @throws TicketNotFoundException
+
 	 */
 	@PostMapping("/add")
 	public ResponseEntity<Ticket> addATicket(@RequestBody Ticket ticket, @RequestParam(required = false) Integer bookingId)

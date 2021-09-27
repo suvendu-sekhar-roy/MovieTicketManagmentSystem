@@ -96,14 +96,14 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public String cancelBooking(Integer ticketId) throws RecordNotFoundException {
-        Optional<Booking> findBookingById = bookingRepository.findById(ticketId);
+    public String cancelBooking(Integer bookingId) throws RecordNotFoundException {
+        Optional<Booking> findBookingById = bookingRepository.findById(bookingId);
 
         if (findBookingById.isPresent()) {
-            bookingRepository.deleteById(ticketId);
+            bookingRepository.deleteById(bookingId);
             return "Booking Canceled!!";
         } else {
-            throw new RecordNotFoundException("Booking with Ticket Id: " + ticketId + " not exists!!");
+            throw new RecordNotFoundException("Booking with Ticket Id: " + bookingId + " not exists!!");
 
         }
     }

@@ -23,7 +23,7 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int bookingId;
-
+    private  String transactionStatus;
     @OneToOne(mappedBy = "booking")
     private Show show;
 

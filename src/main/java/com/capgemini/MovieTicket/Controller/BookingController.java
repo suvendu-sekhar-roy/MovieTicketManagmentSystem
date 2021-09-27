@@ -47,9 +47,9 @@ public class BookingController {
         return bkList;
     }
 
-    @DeleteMapping("/cancelBooking/{ticketId}")
+    @DeleteMapping("/cancelBooking/{bookingId}")
     @ExceptionHandler(RecordNotFoundException.class)
-    public void deleteBookingByID(@PathVariable("ticketId") Integer bookingId) {
+    public void deleteBookingByID(@PathVariable("bookingId") Integer bookingId) {
 
         bookingService.cancelBooking(bookingId);
     }
