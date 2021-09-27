@@ -1,5 +1,6 @@
 package com.capgemini.MovieTicket.Service;
 
+import com.capgemini.MovieTicket.Model.Movie;
 import com.capgemini.MovieTicket.Model.Screen;
 import com.capgemini.MovieTicket.Model.Show;
 import com.capgemini.MovieTicket.Model.Theatre;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ShowServiceImpl implements ShowService{
@@ -58,9 +61,23 @@ public class ShowServiceImpl implements ShowService{
         @Override
         public List<Show> viewShowList(int theatreid) {
             return showRepository.getAllByTheatreId(theatreid);
-
         }
 */
+@Override
+public List<Show> viewShowList(int theatreid) {
+    //List<Movie> movies = new ArrayList<>();
+    List<Show> shows = showRepository.findAll();
+    Set<Integer> showIds = new HashSet<>();
+    for (Show s : shows) {
+        if (s.getTheatre().getTheatreId() == theatreid) {
+            showIds.add(s.getShowId());
+        }
+    }
+    for (Integer id : showIds) {
+        shows.add(showRepository.getById(id));
+    }
+    return shows;
+}
         @Override
         public List<Show> viewShowList(LocalDate date) {
             List<Show> showList = new ArrayList<>();

@@ -25,7 +25,7 @@ public class TheatreServiceImpl implements TheatreService {
 	@Autowired
 	ScreenRepository screenRepository;
 	@Autowired
-	private MovieRepository moviesrepository;
+	private MovieRepository movieRepository;
 
 	@Override
 	public List<Theatre> getAllTheatres() throws RecordNotFoundException {
@@ -84,7 +84,7 @@ public class TheatreServiceImpl implements TheatreService {
 	@Override
 	public List<Theatre> findTheatresByMovie(Integer movieId) throws RecordNotFoundException {
 		List<Theatre> theatreList=new ArrayList<>();
-		Movie movie=moviesrepository.findById(movieId).get();
+		Movie movie=movieRepository.findById(movieId).get();
 		Integer showwID=movie.getShow().getShowId();
 		List<Theatre> theatres = theatrerepository.findAll();
 		for(Theatre theatre:theatres) {
@@ -97,18 +97,4 @@ public class TheatreServiceImpl implements TheatreService {
 		}
 		return theatreList;
 	}
-
-	/*
-	 * @Override public Theatre addTheatre(Theatre t, List<Integer> screens) { //
-	 * TODO Auto-generated method stub
-	 * //if(theatrerepository.existsById(m.getTheatreId())) throws new Theatre
-	 * List<Screen> preScs=new ArrayList<>(); if(screens!=null) { for(int id:
-	 * screens) { Screen sc=screenRepository.getOne(id); preScs.add(sc);
-	 * screenRepository.saveAndFlush(sc); } } t.setScreens(preScs);
-	 * theatrerepository.saveAndFlush(t); return t; }
-	 * 
-	 * @Override public List<Theatre> updateTheatre(Theatre t, List<Integer>
-	 * screenIds) { // TODO Auto-generated method stub return null; }
-	 */
-
 }

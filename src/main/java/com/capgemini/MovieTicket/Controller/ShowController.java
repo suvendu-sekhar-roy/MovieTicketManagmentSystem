@@ -73,12 +73,12 @@ public class ShowController {
     }
 
     /*-------VIEW SHOW LIST BY THEATRE ID--------*/
-    /*
+
     @GetMapping("/viewbytheatreid/{theatreid}")
     public List<Show> viewShowList(@PathVariable int theatreid) {
        // log.info("---------------Show by theatreid -----------------");
         return showService.viewShowList(theatreid);
-    }*/
+    }
 
     /*------VIEW ALL SHOWS--------*/
     @GetMapping("/viewall")

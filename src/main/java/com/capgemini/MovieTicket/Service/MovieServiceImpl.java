@@ -74,11 +74,6 @@ public class MovieServiceImpl implements MovieService {
 		return movie;
 	}
 
-	/*@Override
-	public Movie addMovieToShow(Movie movie, Integer showId) throws RecordNotFoundException {
-		return null;
-	}*/
-
 
 	//We have to add shows according to movie
 	@Override
@@ -103,12 +98,6 @@ public class MovieServiceImpl implements MovieService {
 		if (ml.size() == 0) throw new RecordNotFoundException("No movie is going on");
 		return ml;
 	}
-/*
-	@Override
-	public List<Movie> viewMovieList(int theatreid) {
-		return null;
-	}
-*/
 
 	//Show movie my theater id
 	@Override

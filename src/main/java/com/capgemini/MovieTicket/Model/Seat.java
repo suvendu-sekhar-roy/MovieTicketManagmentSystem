@@ -20,8 +20,8 @@ public class Seat {
 
 	@Enumerated(EnumType.STRING)
 	private SeatStatus status;
-	/*@JsonIgnore
+	@JsonIgnore
 	@ManyToOne
 	private Ticket ticket;
-	*/
+
 }

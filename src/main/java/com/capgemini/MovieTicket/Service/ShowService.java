@@ -16,7 +16,7 @@ public interface ShowService {
 
     public Show viewShow(int showId);
 
-    //public List<Show> viewShowList(int theatreid); //not implemented yet
+    public List<Show> viewShowList(int theatreid); //not implemented yet
 
     public List<Show> viewShowList(LocalDate date);
 

@@ -2,23 +2,32 @@ package com.capgemini.MovieTicket.Service;
 
 import com.capgemini.MovieTicket.Exception.RecordNotFoundException;
 import com.capgemini.MovieTicket.Model.Booking;
-import com.capgemini.MovieTicket.Repository.BookingRepository;
+import com.capgemini.MovieTicket.Model.Seat;
+import com.capgemini.MovieTicket.Model.Ticket;
+import com.capgemini.MovieTicket.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.chrono.ChronoLocalDate;
+import java.util.*;
 
 @Service
 public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingRepository bookingRepository;
-
+    @Autowired
+    MovieRepository movieRepository;
+    @Autowired
+    ShowRepository showRepository;
+    @Autowired
+    CustomerRepository custoRepository;
+    @Autowired
+    TicketRepository ticketRepository;
 
     @Override
     public Booking addBooking(Booking newbooking) {
@@ -29,18 +38,18 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking updateBooking(Booking changedBooking) {
-        Optional<Booking> findBookingById = bookingRepository.findById(changedBooking.getTicketId());
+        Optional<Booking> findBookingById = bookingRepository.findById(changedBooking.getBookingId());
         if (findBookingById.isPresent()) {
             bookingRepository.save(changedBooking);
         } else
-            throw new RecordNotFoundException("Booking with Booking Id: " + changedBooking.getTicketId() + " not exists!!");
+            throw new RecordNotFoundException("Booking with Booking Id: " + changedBooking.getBookingId() + " not exists!!");
         return changedBooking;
     }
 
     //Show all bookings using date
     @Override
-    public List<Booking> showBookingListbyDate(LocalDateTime bookingdate) throws RecordNotFoundException{
-       /* List<Booking> bkList = new ArrayList<>();
+    public List<Booking> showBookingListbyDate(LocalDate bookingdate) throws RecordNotFoundException{
+        List<Booking> bkList = new ArrayList<>();
         for (Booking booking : bookingRepository.findAll()) {
             if (booking.getBookingDate() != null && booking.getBookingDate().isEqual(bookingdate)) {
                 bkList.add(booking);
@@ -50,8 +59,7 @@ public class BookingServiceImpl implements BookingService {
             throw new RecordNotFoundException("No bookings found");
         else {
             return bkList;
-        }*/
-        return null;
+        }
     }
 
     public List<Booking> showAllBooking(){
@@ -61,19 +69,19 @@ public class BookingServiceImpl implements BookingService {
 
     //Show all bookings using MovieId
     @Override
-    public List<Booking> showBookingListbyId(Integer movieId) {
+    public List<Booking> showBookingbyId(Integer movieId) {
         /*List<Booking> bk = query.getAllByMovieId(movieid);
         return bk;*/
         return null;
     }
 
     @Override
-    public Booking totalCost(Integer bookingId) {
-        /*
+    public double totalCost(Integer bookingId) {
+
         List<Ticket> tickets = ticketRepository.findAll();
 		Set<Seat> Seats = new HashSet<>();
 		for (Ticket ticket : tickets) {
-			if (bookingid == ticket.getBooking().getTransactionId()) {
+			if (bookingId == ticket.getBooking().getBookingId()) {
 				Seats.addAll(ticket.getSeats());
 			}
 		}
@@ -81,12 +89,10 @@ public class BookingServiceImpl implements BookingService {
 		for (Seat seat : Seats) {
 			amount = amount + seat.getPrice();
 		}
-		Booking booking = bookingRepository.getOne(bookingid);
+		Booking booking = bookingRepository.getById(bookingId);
 		booking.setTotalCost(amount);
 		bookingRepository.saveAndFlush(booking);
 		return amount;
-         */
-        return null;
     }
 
     @Override

@@ -16,8 +16,7 @@ public class Ticket {
 	private int ticketId;
 	private int noOfSeats;
 	private boolean ticketStatus;
-	//@OneToMany(mappedBy = "ticket")
-	@OneToMany
+	@OneToMany(mappedBy = "ticket")
 	private List<Seat> seats;
 	@OneToOne
 	private Booking booking;

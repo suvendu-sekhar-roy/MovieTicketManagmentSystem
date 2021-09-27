@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
@@ -41,7 +42,7 @@ public class BookingController {
         return bkList;
     }
     @GetMapping("/byDate/{date}")
-    public List<Booking> getBookingByDate(@PathVariable("date")LocalDateTime date){
+    public List<Booking> getBookingByDate(@PathVariable("date") LocalDate date){
         List<Booking> bkList = bookingService.showBookingListbyDate(date);
         return bkList;
     }
