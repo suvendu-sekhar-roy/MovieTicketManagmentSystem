@@ -9,7 +9,10 @@ import java.util.Set;
 import com.capgemini.MovieTicket.Exception.RecordAlreadyExistException;
 import com.capgemini.MovieTicket.Exception.RecordNotFoundException;
 import com.capgemini.MovieTicket.Model.Movie;
+import com.capgemini.MovieTicket.Model.Show;
 import com.capgemini.MovieTicket.Repository.MovieRepository;
+import com.capgemini.MovieTicket.Repository.ShowRepository;
+import com.capgemini.MovieTicket.Repository.TheatreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,57 +26,46 @@ import java.util.Base64;
 public class MovieServiceImpl implements MovieService {
 
 	@Autowired
-	private MovieRepository moviesrepository;
-	/*
+	private MovieRepository movierepository;
+
 	@Autowired
 	TheatreRepository theatreRepository;
 	@Autowired
 	ShowRepository showrepository;
-	@Autowired
-	QueryClass query;
-*/
+	/*@Autowired
+	QueryClass query;*/
+
 	@Override
 	public Movie addMovie(Movie movie) throws RecordNotFoundException {
 
-			if (moviesrepository.existsById(movie.getMovieId())) {
+			if (movierepository.existsById(movie.getMovieId())) {
 				throw new RecordAlreadyExistException("Movie with this id already exists");
-			} else {
-				/*
-				String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-				if(fileName.contains(".."))
-				{
-					System.out.println("not a a valid file");
-				}
-				try {
-					movie.setMovieImage(Base64.getEncoder().encodeToString(file.getBytes()));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}*/
-				moviesrepository.save(movie);
-
-		}
+			}
+			else {
+				movierepository.save(movie);
+			}
 		return movie;
 	}
 		//We have to delete all the shows also with movie deletion
 
 	@Override
 	public Movie removeMovie(int movieid) {
-		Movie m = moviesrepository.findById(movieid).get();
-		/*List<Show> shows = showrepository.findAll();
+		Movie m = movierepository.findById(movieid).get();
+		List<Show> shows = showrepository.findAll();
 		for (Show show : shows) {
 			if (show.getMovie()!=null && show.getMovie().getMovieId() == movieid) {
 				show.setMovie(null);
 			}
-		}*/
-		moviesrepository.delete(m);
+		}
+		movierepository.delete(m);
 		return m;
 	}
 	
 	@Override
 	public Movie updateMovie(Movie movie) {
 		if (movie != null) {
-			if (moviesrepository.existsById(movie.getMovieId())) {
-				moviesrepository.save(movie);
+			if (movierepository.existsById(movie.getMovieId())) {
+				movierepository.save(movie);
 			} else {
 
 				throw new RecordNotFoundException("Movie with this id doesn't exist");
@@ -82,41 +74,41 @@ public class MovieServiceImpl implements MovieService {
 		return movie;
 	}
 
-	@Override
+	/*@Override
 	public Movie addMovieToShow(Movie movie, Integer showId) throws RecordNotFoundException {
 		return null;
-	}
+	}*/
 
-	/*
+
 	//We have to add shows according to movie
 	@Override
-	public Movie addMovieToShow(Movie movie,Integer showId) {
+	public Movie addMovieToShow(Movie movie,Integer showId) throws RecordNotFoundException{
 		Show show=new Show();
 		if (showId != null) {
-			show = showrepository.getOne(showId);
+			show = showrepository.getById(showId);
 			movie.setShow(show);
 		}
-		moviesrepository.saveAndFlush(movie);
-		return moviesrepository.getOne(movie.getMovieId());
+		movierepository.save(movie);
+		return movierepository.getById(movie.getMovieId());
 	}
-*/
+
 	@Override
 	public Movie viewMovie(int movieid) {
-		return moviesrepository.findById(movieid).get();
+		return movierepository.findById(movieid).get();
 	}
 
 	@Override
 	public List<Movie> viewMovieList() throws RecordNotFoundException {
-		List<Movie> ml = (List<Movie>) moviesrepository.findAll();
+		List<Movie> ml = (List<Movie>) movierepository.findAll();
 		if (ml.size() == 0) throw new RecordNotFoundException("No movie is going on");
 		return ml;
 	}
-
+/*
 	@Override
 	public List<Movie> viewMovieList(int theatreid) {
 		return null;
 	}
-/*
+*/
 
 	//Show movie my theater id
 	@Override
@@ -130,23 +122,21 @@ public class MovieServiceImpl implements MovieService {
 			}
 		}
 		for (Integer id : showIds) {
-			movies.add(showrepository.getOne(id).getMovie());
+			movies.add(showrepository.getById(id).getMovie());
 		}
 		return movies;
 	}
 
- */
 
 	@Override
 	public List<Movie> viewMovieList(LocalDate date) {
 		List<Movie> mvList = new ArrayList<>();
-		for (Movie movie : moviesrepository.findAll()) {
+		for (Movie movie : movierepository.findAll()) {
 			if (movie.getMovieDate() != null && movie.getMovieDate().isEqual(date)) {
 				mvList.add(movie);
 			}
 		}
 		return mvList;
 	}
-
 
 }

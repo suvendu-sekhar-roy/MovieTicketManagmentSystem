@@ -64,11 +64,11 @@ public class MovieController {
 		return response;
 	}
 
-	/*
+
 	//Update movie to showlists
 	@PutMapping("/map")
 	public ResponseEntity<Movie> addToShow(@RequestBody Movie movie,@RequestParam(required = false) Integer showId)
-			throws MovieNotFoundException {
+			throws RecordNotFoundException {
 
 		ResponseEntity<Movie> response = null;
 		if (movie == null) {
@@ -76,11 +76,11 @@ public class MovieController {
 		} else {
 			movie = moviesService.addMovieToShow(movie,showId);
 			response = new ResponseEntity<>(movie, HttpStatus.OK);
-			logger.info("-------Movie Updated Successfully---------");
+			//logger.info("-------Movie Updated Successfully---------");
 		}
 		return response;
 	}
-*/
+
 	
 	/*
 	 * Return's the List of Movies from the Database

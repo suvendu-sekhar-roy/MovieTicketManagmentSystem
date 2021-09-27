@@ -13,11 +13,6 @@ import com.capgemini.MovieTicket.Service.ScreenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/*
- * 
- * @author Thejesh
- * @category Screen Service Implementation
- */
 @Service
 public class ScreenServiceImpl implements ScreenService {
 
@@ -26,9 +21,7 @@ public class ScreenServiceImpl implements ScreenService {
 	@Autowired
 	private TheatreRepository theatreRepository;
 
-	/**
-	 * @return screenList
-	 */
+
 	@Override
 	public List<Screen> viewScreenList() throws RecordNotFoundException {
 		List<Screen> screen = screenRepository.findAll();
@@ -37,9 +30,7 @@ public class ScreenServiceImpl implements ScreenService {
 		return screen;
 	}
 
-	/**
-	 * @return screen
-	 */
+
 	@Override
 	public Screen addScreen(Screen screen, Integer theatreId) throws RecordAlreadyExistException {
 		Theatre theatre = new Theatre();

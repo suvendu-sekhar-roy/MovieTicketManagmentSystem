@@ -8,8 +8,10 @@ import com.capgemini.MovieTicket.Exception.RecordAlreadyExistException;
 import com.capgemini.MovieTicket.Exception.RecordNotFoundException;
 import com.capgemini.MovieTicket.Model.Booking;
 import com.capgemini.MovieTicket.Model.Movie;
+import com.capgemini.MovieTicket.Model.Show;
 import com.capgemini.MovieTicket.Model.Theatre;
 import com.capgemini.MovieTicket.Repository.MovieRepository;
+import com.capgemini.MovieTicket.Repository.ScreenRepository;
 import com.capgemini.MovieTicket.Repository.TheatreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +21,11 @@ public class TheatreServiceImpl implements TheatreService {
 
 	@Autowired
 	private TheatreRepository theatrerepository;
-	/*
+
 	@Autowired
 	ScreenRepository screenRepository;
 	@Autowired
-	private MovieRepository moviesrepository;*/
+	private MovieRepository moviesrepository;
 
 	@Override
 	public List<Theatre> getAllTheatres() throws RecordNotFoundException {
@@ -77,18 +79,11 @@ public class TheatreServiceImpl implements TheatreService {
 
 		}
 	}
-/*
-	@Override
-	public List<Theatre> deleteTheatreById(int theatreId) {
-		// TODO Auto-generated method stub
-		theatrerepository.deleteById(theatreId);
-		return theatrerepository.findAll();
-	}*/
 
 
 	@Override
 	public List<Theatre> findTheatresByMovie(Integer movieId) throws RecordNotFoundException {
-	/*	List<Theatre> theatreList=new ArrayList<>();
+		List<Theatre> theatreList=new ArrayList<>();
 		Movie movie=moviesrepository.findById(movieId).get();
 		Integer showwID=movie.getShow().getShowId();
 		List<Theatre> theatres = theatrerepository.findAll();
@@ -100,8 +95,7 @@ public class TheatreServiceImpl implements TheatreService {
 				}
 			}
 		}
-		return theatreList;*/
-		return null;
+		return theatreList;
 	}
 
 	/*

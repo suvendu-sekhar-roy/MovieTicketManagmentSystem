@@ -1,7 +1,11 @@
 package com.capgemini.MovieTicket.Service;
 
+import com.capgemini.MovieTicket.Model.Screen;
 import com.capgemini.MovieTicket.Model.Show;
+import com.capgemini.MovieTicket.Model.Theatre;
+import com.capgemini.MovieTicket.Repository.ScreenRepository;
 import com.capgemini.MovieTicket.Repository.ShowRepository;
+import com.capgemini.MovieTicket.Repository.TheatreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,10 @@ import java.util.List;
 public class ShowServiceImpl implements ShowService{
         @Autowired
         private ShowRepository showRepository;
+        @Autowired
+        private TheatreRepository theatreRepository;
+        @Autowired
+        private ScreenRepository screenRepository;
         @Override
         public Show addShow(Show show) {
             return showRepository.save(show);
@@ -20,19 +28,19 @@ public class ShowServiceImpl implements ShowService{
 
         @Override
         public Show updateShow(Show show, Integer theatreId, Integer screenId) {
-//        Theatre theatre = new Theatre();
-//        Screen screen = new Screen();
-//        if (theatreId != null) {
-//            theatre = theatreRepository.getOne(theatreId);
-//            show.setTheatre(theatre);
-//        }
-//        if (screenId != null) {
-//            screen = screenRepository.getOne(screenId);
-//            show.setScreen(screen);
-//        }
-//        showrepository.saveAndFlush(show);
-//        return show;
-            return null;
+        Theatre theatre = new Theatre();
+        Screen screen = new Screen();
+        if (theatreId != null) {
+            theatre = theatreRepository.getById(theatreId);
+            show.setTheatre(theatre);
+        }
+        if (screenId != null) {
+            screen = screenRepository.getById(screenId);
+            show.setScreen(screen);
+        }
+        showRepository.save(show);
+        return show;
+
         }
 
         @Override
@@ -46,13 +54,13 @@ public class ShowServiceImpl implements ShowService{
         public Show viewShow(int showId) {
             return showRepository.findById(showId).get();
         }
-
+/*
         @Override
         public List<Show> viewShowList(int theatreid) {
-            //return showRepository.getAllByTheatreId(theatreid);
-            return null;
-        }
+            return showRepository.getAllByTheatreId(theatreid);
 
+        }
+*/
         @Override
         public List<Show> viewShowList(LocalDate date) {
             List<Show> showList = new ArrayList<>();
