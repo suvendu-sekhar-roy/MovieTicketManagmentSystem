@@ -2,6 +2,9 @@ package com.capgemini.MovieTicket.Controller;
 
 import java.util.List;
 
+import com.capgemini.MovieTicket.Exception.RecordNotFoundException;
+import com.capgemini.MovieTicket.Model.Seat;
+import com.capgemini.MovieTicket.Service.SeatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,28 +18,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.mts.exception.AccessForbiddenException;
-import com.cg.mts.exception.SeatNotFoundException;
-import com.cg.mts.pojo.Seat;
-import com.cg.mts.service.ISeatService;
-
 /**
  * 
  * @author Surya
  *
  */
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/seats")
 public class SeatController {
 
 	Logger logger = LoggerFactory.getLogger(SeatController.class);
 	@Autowired
-	private ISeatService seatService;
-	@Autowired
+	private SeatService seatService;
+	/*@Autowired
 	LoginController loginController;
-
-	/**
+*/
+	/*
 	 * 
 	 * @param seat
 	 * @return seatDetails
@@ -45,27 +43,27 @@ public class SeatController {
 	 */
 	@PostMapping("/add")
 	public ResponseEntity<Seat> addASeat(@RequestBody Seat seat)
-			throws AccessForbiddenException, SeatNotFoundException {
-		
+			throws RecordNotFoundException {
+		//AccessForbiddenException,
 		seat = seatService.addSeat(seat);
 		logger.info("-------Seat Added Successfully---------");
 		return new ResponseEntity<>(seat, HttpStatus.CREATED);
 	}
 
-	/**
+	/*
 	 * 
 	 * @return listOfSeats
 	 * @throws AccessForbiddenException
 	 * @throws SeatNotFoundException
 	 */
 	@GetMapping("/findall")
-	public ResponseEntity<List<Seat>> viewSeatList() throws AccessForbiddenException, SeatNotFoundException {
+	public ResponseEntity<List<Seat>> viewSeatList() throws  RecordNotFoundException { //AccessForbiddenException,
 		
 		logger.info("-------List of Seats Fetched Successfully---------");
 		return ResponseEntity.ok(seatService.viewSeatList());
 	}
 
-	/**
+	/*
 	 * 
 	 * @param seat
 	 * @return updated seat
@@ -74,7 +72,7 @@ public class SeatController {
 	 */
 	@PutMapping("/update")
 	public ResponseEntity<Seat> updateSeat(@RequestBody Seat seat)
-			throws AccessForbiddenException, SeatNotFoundException {
+			throws RecordNotFoundException { //AccessForbiddenException,
 	
 		ResponseEntity<Seat> response = null;
 		if (seat == null) {
@@ -87,7 +85,7 @@ public class SeatController {
 		return response;
 	}
 
-	/**
+	/*
 	 * 
 	 * @param seat
 	 * @return booked seat
@@ -96,14 +94,14 @@ public class SeatController {
 	 */
 	@PutMapping("/book")
 	public ResponseEntity<Seat> BookASeat(@RequestBody Seat seat)
-			throws AccessForbiddenException, SeatNotFoundException {
+			throws RecordNotFoundException {//AccessForbiddenException,
 		
 		seat = seatService.bookSeat(seat);
 		logger.info("-------Seat booking Successfull---------");
 		return new ResponseEntity<>(seat, HttpStatus.OK);
 	}
 
-	/**
+	/*
 	 * 
 	 * @param seat
 	 * @return cancelled seat
@@ -112,14 +110,14 @@ public class SeatController {
 	 */
 	@PutMapping("/cancel")
 	public ResponseEntity<Seat> CancelASeat(@RequestBody Seat seat)
-			throws AccessForbiddenException, SeatNotFoundException {
+			throws  RecordNotFoundException { //AccessForbiddenException,
 		
 		seat = seatService.cancelSeatBooking(seat);
 		logger.info("-------Seat Cancellation Successfull---------");
 		return new ResponseEntity<>(seat, HttpStatus.OK);
 	}
 
-	/**
+	/*
 	 * 
 	 * @param seat
 	 * @return blocked seat
@@ -128,7 +126,7 @@ public class SeatController {
 	 */
 	@PutMapping("/block")
 	public ResponseEntity<Seat> BloclASeat(@RequestBody Seat seat)
-			throws AccessForbiddenException, SeatNotFoundException {
+			throws  RecordNotFoundException { //AccessForbiddenException,
 		
 		seat = seatService.blockSeat(seat);
 		logger.info("-------Seat blocking Successfull---------");

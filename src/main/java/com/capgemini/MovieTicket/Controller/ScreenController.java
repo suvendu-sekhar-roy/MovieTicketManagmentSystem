@@ -2,6 +2,10 @@ package com.capgemini.MovieTicket.Controller;
 
 import java.util.List;
 
+import com.capgemini.MovieTicket.Exception.RecordNotFoundException;
+import com.capgemini.MovieTicket.Model.Screen;
+import com.capgemini.MovieTicket.Model.Theatre;
+import com.capgemini.MovieTicket.Service.ScreenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.cg.mts.exception.ScreenNotFoundException;
-import com.cg.mts.pojo.Screen;
-import com.cg.mts.pojo.Theatre;
-import com.cg.mts.service.ScreenService;
 
 /**
  * 
@@ -37,7 +37,7 @@ public class ScreenController {
 	@Autowired
 	private ScreenService screenService;
 
-	/**
+	/*
 	 * 
 	 * @param screen
 	 * @param theatreId
@@ -47,28 +47,28 @@ public class ScreenController {
 	 */
 	@PostMapping("/add")
 	public ResponseEntity<Screen> addAScreen(@RequestBody Screen screen,
-			@RequestParam(required = false) Integer theatreId)
-			throws ScreenNotFoundException {
+											 @RequestParam(required = false) Integer theatreId)
+			throws RecordNotFoundException {
 
 		logger.info("-------Screen Successfully added into Theatre " + theatreId + "---------");
 		return ResponseEntity.ok(screenService.addScreen(screen, theatreId));
 	}
 
-	/**
+	/*
 	 * 
 	 * @return screenList
 	 * @throws AccessForbiddenException
 	 * @throws ScreenNotFoundException
 	 */
 	@GetMapping("/findall")
-	public ResponseEntity<List<Screen>> viewScreenList() throws  ScreenNotFoundException {
+	public ResponseEntity<List<Screen>> viewScreenList() throws  RecordNotFoundException {
 
 		logger.info("-------List Of Screens Fetched Successfully---------");
 		return ResponseEntity.ok(screenService.viewScreenList());
 	}
 	
 	@GetMapping("/theatre/{screenId}")
-	public ResponseEntity<Theatre>  getTheatreById(@PathVariable int screenId) throws ScreenNotFoundException {
+	public ResponseEntity<Theatre>  getTheatreById(@PathVariable int screenId) throws RecordNotFoundException {
 		ResponseEntity<Theatre> response = null;
 		try {
 			Theatre theatre = screenService.getTheatre(screenId);
@@ -81,7 +81,7 @@ public class ScreenController {
 	
 	@GetMapping("/viewScreen/{screenId}")
 	public ResponseEntity<Screen> viewScreen(@PathVariable int screenId)
-			throws ScreenNotFoundException {
+			throws RecordNotFoundException {
 		ResponseEntity<Screen> response = null;
 		try {
 			Screen screen = screenService.viewScreen(screenId);
@@ -89,11 +89,11 @@ public class ScreenController {
 			logger.info("-------Screen Found---------");
 		} catch (Exception e) {
 			response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			throw new ScreenNotFoundException("Screen dosen't exist");
+			throw new RecordNotFoundException("Screen dosen't exist");
 		}
 		return response;
 	}
-	/**
+	/*
 	 * 
 	 * @param s
 	 * @param theatreId
@@ -103,7 +103,7 @@ public class ScreenController {
 	 */
 	@PutMapping("/update")
 	public ResponseEntity<Screen> updateScreen(@RequestBody Screen s, @RequestParam(required = false) Integer theatreId)
-			throws  ScreenNotFoundException {
+			throws  RecordNotFoundException {
 
 		ResponseEntity<Screen> response = null;
 		if (s == null) {
