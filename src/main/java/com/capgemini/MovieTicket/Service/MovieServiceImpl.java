@@ -34,7 +34,7 @@ public class MovieServiceImpl implements MovieService {
 */
 	@Override
 	public Movie addMovie(Movie movie) throws RecordNotFoundException {
-		if (movie != null) {
+
 			if (moviesrepository.existsById(movie.getMovieId())) {
 				throw new RecordAlreadyExistException("Movie with this id already exists");
 			} else {
@@ -50,7 +50,7 @@ public class MovieServiceImpl implements MovieService {
 					e.printStackTrace();
 				}*/
 				moviesrepository.save(movie);
-			}
+
 		}
 		return movie;
 	}

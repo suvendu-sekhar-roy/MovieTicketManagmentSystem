@@ -56,14 +56,12 @@ public class TheatreServiceImpl implements TheatreService {
 	@Override
 	public Theatre updateTheatre(Theatre m) throws RecordNotFoundException {
 		// TODO Auto-generated method stub
-		if (m != null) {
+
 			if (theatrerepository.existsById(m.getTheatreId())) {
 				theatrerepository.save(m);
 			} else {
 				throw new RecordNotFoundException("Theatre doesn't exists");
 			}
-
-		}
 		return m;
 	}
 

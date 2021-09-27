@@ -20,7 +20,7 @@ public class Movie {
 	private String movieHours;
 	private String movieLanguage;
 	private String movieDescription;
-	//private String movieRating;
+	private String movieRating;
 	/*
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)

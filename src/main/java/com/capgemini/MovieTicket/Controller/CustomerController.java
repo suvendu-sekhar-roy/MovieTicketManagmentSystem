@@ -34,10 +34,12 @@ public class CustomerController {
     }
 
     @PutMapping("/update/{id}")
-    public void update(@PathVariable int id,@Valid @RequestBody Customer customer){
+    public Customer update(@PathVariable int id,@Valid @RequestBody Customer customer){
         log.info("Updating a customer!!");
         customerService.udpateCustomer(id, customer);
-    }
+        return customer;
+    } //need to return customer
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id){
         log.info("Deleting a customer with id %d", id);
