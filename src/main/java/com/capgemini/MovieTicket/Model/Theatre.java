@@ -20,12 +20,13 @@ public class Theatre {
 	private String theatreCity;
 	private String managerName;
 	private String managerContact;
-	/*
+
 	@OneToMany(mappedBy = "theatre",cascade = CascadeType.ALL)
 	private List<Screen> screen;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "theatre",cascade = CascadeType.ALL)
 	private List<Show> show;
-*/
+
 
 }

@@ -7,13 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/*
- * 
- * @author Thejesh
- * @category ScreenPojo
- *
- */
-
 @Data
 @NoArgsConstructor
 @Entity
@@ -26,9 +19,10 @@ public class Screen {
 	@JsonIgnore
 	@ManyToOne
 	private Theatre theatre;
-	/*
+
 	@OneToMany(mappedBy = "screen",cascade = CascadeType.ALL)
-	private List<Show> show;*/
+	private List<Show> show;
+
 	private String screenName;
 	@Column(name = "rows")
 	private int rows;
