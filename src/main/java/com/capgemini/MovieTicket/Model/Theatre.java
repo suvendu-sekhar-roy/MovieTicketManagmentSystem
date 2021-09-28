@@ -27,6 +27,4 @@ public class Theatre {
 	@JsonIgnore
 	@OneToMany(mappedBy = "theatre",cascade = CascadeType.ALL)
 	private List<Show> show;
-
-
 }

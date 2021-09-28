@@ -23,7 +23,7 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     ShowRepository showRepository;
     @Autowired
-    CustomerRepository custoRepository;
+    CustomerRepository customerRepository;
     @Autowired
     TicketRepository ticketRepository;
 

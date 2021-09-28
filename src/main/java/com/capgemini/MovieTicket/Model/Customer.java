@@ -18,8 +18,6 @@ public class Customer {
 	private String mobileNumber;
 	private String email;
 	private String password;
-//	@JsonIgnore
-//	@OneToOne
-//	private User user;
+
 
 }
