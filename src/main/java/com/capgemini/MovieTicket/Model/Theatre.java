@@ -23,6 +23,7 @@ public class Theatre {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "theatre",cascade = CascadeType.ALL)
+	//@JoinColumn(name = "ca_fk", referencedColumnName = "screenId" )
 	private List<Screen> screen;
 
 	@JsonIgnore

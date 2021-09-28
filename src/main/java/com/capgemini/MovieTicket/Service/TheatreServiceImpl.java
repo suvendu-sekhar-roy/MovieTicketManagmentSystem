@@ -50,6 +50,7 @@ public class TheatreServiceImpl implements TheatreService {
 				throw new RecordAlreadyExistException("Theatre already exists");
 			} else {
 				theatrerepository.save(m);
+				//screenRepository.save(m.getScreen());
 			}
 		}
 		return m;

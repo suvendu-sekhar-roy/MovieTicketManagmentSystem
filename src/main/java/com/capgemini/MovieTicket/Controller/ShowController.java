@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@RestController
+@RequestMapping("/show")
 public class ShowController {
     @Autowired
     private ShowService showService;

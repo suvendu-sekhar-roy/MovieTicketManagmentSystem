@@ -17,7 +17,10 @@ public class Screen {
 	private int screenId;
 
 	@JsonIgnore
+	//@ManyToOne(targetEntity = Theatre.class, cascade = CascadeType.ALL)
+	//@JoinColumn(name = "theatre_fk")
 	@ManyToOne
+	@JoinColumn(name="theatre_theatre_id")
 	private Theatre theatre;
 
 	@JsonIgnore

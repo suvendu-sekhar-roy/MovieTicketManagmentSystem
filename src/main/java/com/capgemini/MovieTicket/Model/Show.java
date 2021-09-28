@@ -54,6 +54,7 @@ import java.time.LocalDateTime;
 
         @JsonIgnore
         @ManyToOne
+        @JoinColumn(name="theatreId")
         private Theatre theatre;
 
         @JsonIgnore
