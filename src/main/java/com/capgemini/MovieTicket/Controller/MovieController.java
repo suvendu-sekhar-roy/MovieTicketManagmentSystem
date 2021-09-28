@@ -19,38 +19,24 @@ import java.util.List;
  * 
 */
 @RestController
-@RequestMapping("/movies")
+@RequestMapping("/movie")
 public class MovieController {
 
 	//Logger logger = LoggerFactory.getLogger(MoviesController.class);
 	@Autowired
 	private MovieService moviesService;
 
-	/*
-	  Stores a Movie object in the Database.
-	 *
-	 * @param movie
-	 * @return Movie
-	 * @throws MovieNotFoundException
-	 * @throws IOException 
-	 * @throws AccessForbiddenException
-	 */
-	@PostMapping("/add")
+
+	 // Stores a Movie object in the Database.
+	@PostMapping("/addMovie")
 	public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) throws RecordAlreadyExistException {
 		movie = moviesService.addMovie(movie);
 		//logger.info("-------Movie Added Successfully---------");
 		return new ResponseEntity<Movie>(movie, HttpStatus.CREATED);
 	}
 
-	/*
-	 * Updates a existing Movie record in the database.
-	 * 
-	 * @param movie
-	 * @return Movie
-	 * @throws MovieNotFoundException
-	 * @throws AccessForbiddenException
-	 */
-	@PutMapping("/update")
+	// Updates a existing Movie record in the database.
+	@PutMapping("/updateMovie")
 	public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie) throws RecordNotFoundException {
 
 		ResponseEntity<Movie> response = null;
@@ -84,12 +70,8 @@ public class MovieController {
 	
 	/*
 	 * Return's the List of Movies from the Database
-	 * 
-	 * @return List<Movie>
-	 * @throws MovieNotFoundException
-	 * @throws AccessForbiddenException
 	 */
-	@GetMapping("/findall")
+	@GetMapping("/showAll")
 	public ResponseEntity<List<Movie>> viewMovieList() throws RecordNotFoundException {
 
 		//logger.info("-------Movie List Fetched---------");
@@ -98,13 +80,8 @@ public class MovieController {
 
 	/*
 	 * Returns the record from the database using identifier - movieId
-	 * 
-	 * @param movieId
-	 * @return Movie
-	 * @throws MovieNotFoundException
-	 * @throws AccessForbiddenException
 	 */
-	@GetMapping("/viewMovie/{movieId}")
+	@GetMapping("/showById/{movieId}")
 	public ResponseEntity<Movie> viewMovie(@PathVariable int movieId) throws RecordNotFoundException {
 
 		ResponseEntity<Movie> response = null;
@@ -120,15 +97,31 @@ public class MovieController {
 		// return ResponseEntity.ok(moviesService.viewMovie(movieId));
 	}
 
+
 	/*
-	 * Removes persisted Movie instance from the Database.
-	 * 
-	 * @param movieId
-	 * @return Movie
-	 * @throws MovieNotFoundException
-	 * @throws AccessForbiddenException
+	 * Displays List of movies based on the TheatreId.
 	 */
-	@DeleteMapping("/delete/{movieId}")
+	@GetMapping("/showByTheatre/{theatreId}")
+	public List<Movie> viewMovieByTheatreId(@PathVariable int theatreId)  {
+		//logger.info("-------Movies With TheatreId " + theatreId + " Found---------");
+		return moviesService.viewMovieList(theatreId);
+	}
+
+	/*
+	 * Returns the list of Movies based on the Date.
+	 */
+	@GetMapping("/showByDate/{date}")
+	public List<Movie> viewMovieByLocalDate(
+			@RequestParam("movieDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+		//logger.info("-------Movies With Date " + date + " Found---------");
+		return moviesService.viewMovieList(date);
+	}
+
+
+	/*
+	 * Removes persisted Movie instance from the Database
+	 */
+	@DeleteMapping("/deleteMovie/{movieId}")
 	public ResponseEntity<Movie> removeMovie(@PathVariable int movieId)
 			throws RecordNotFoundException {
 
@@ -144,31 +137,5 @@ public class MovieController {
 		return response;
 	}
 
-	/*
-	 * Displays List of movies based on the TheatreId.
-	 * 
-	 * @param theatreId
-	 * @return Movie
-	 * @throws AccessForbiddenException
-	 */
-	@GetMapping("/byTheatre/{theatreId}")
-	public List<Movie> viewMovieByTheatreId(@PathVariable int theatreId)  {
-		//logger.info("-------Movies With TheatreId " + theatreId + " Found---------");
-		return moviesService.viewMovieList(theatreId);
-	}
-
-	/*
-	 * Returns the list of Movies based on the Date.
-	 * 
-	 * @param date
-	 * @return Movie
-	 * @throws AccessForbiddenException
-	 */
-	@GetMapping("/byDate/{date}")
-	public List<Movie> viewMovieByLocalDate(
-			@RequestParam("movieDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-		//logger.info("-------Movies With Date " + date + " Found---------");
-		return moviesService.viewMovieList(date);
-	}
 
 }

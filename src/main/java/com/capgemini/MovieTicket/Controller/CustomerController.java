@@ -13,34 +13,38 @@ import java.util.List;
 //RESTful APIs
 @Slf4j
 @RestController
-@RequestMapping("customers")
+@RequestMapping("/customer")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
-    @GetMapping("/getall")
-    public List<Customer> getCustomers() {
-        log.info("INSIDE getCustomers!!");
-        return customerService.getAll();
-    }
-    @PostMapping("/create")
+
+    @PostMapping("/addCustomer")
     public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
         log.info("Inside Customer %s", customer);
         Customer cust = customerService.addCustomer(customer);
         return new ResponseEntity<>(cust, HttpStatus.CREATED);
     }
-    @GetMapping("/getbyid/{id}")
-    public Customer fetchById(@PathVariable int id) {
-        return customerService.fetchById(id);
-    }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/updateCustomer/{id}")
     public Customer update(@PathVariable int id,@Valid @RequestBody Customer customer){
         log.info("Updating a customer!!");
         customerService.udpateCustomer(id, customer);
         return customer;
-    } //need to return customer
+    }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/showAll")
+    public List<Customer> getCustomers() {
+        log.info("INSIDE getCustomers!!");
+        return customerService.getAll();
+    }
+
+    @GetMapping("/showById/{id}")
+    public Customer fetchById(@PathVariable int id) {
+        return customerService.fetchById(id);
+    }
+
+
+    @DeleteMapping("/deleteCustomer/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id){
         log.info("Deleting a customer with id %d", id);
         customerService.deleteCustomer(id);

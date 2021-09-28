@@ -33,15 +33,8 @@ public class TicketController {
 
 	@Autowired
 	private TicketService ticketService;
-	/*@Autowired
-	LoginController loginController;
-*/
-	/*
-	 * 
-	 * @param ticket
-	 * @return added ticket
 
-	 */
+
 	@PostMapping("/add")
 	public ResponseEntity<Ticket> addATicket(@RequestBody Ticket ticket, @RequestParam(required = false) Integer bookingId)
 			throws RecordNotFoundException {
@@ -52,12 +45,7 @@ public class TicketController {
 		return new ResponseEntity<>(ticket, HttpStatus.CREATED);
 	}
 
-	/*
-	 * 
-	 * @return ticketList
-	 * @throws AccessForbiddenException
-	 * @throws TicketNotFoundException
-	 */
+
 	@GetMapping("/findall")
 	public ResponseEntity<List<Ticket>> viewTicketList() throws RecordNotFoundException {//AccessForbiddenException,
 		
@@ -65,13 +53,6 @@ public class TicketController {
 		return ResponseEntity.ok(ticketService.viewTicketList());
 	}
 
-	/*
-	 * 
-	 * @param ticketId
-	 * @return ticket by ticketId
-	 * @throws TicketNotFoundException
-	 * @throws AccessForbiddenException
-	 */
 	@GetMapping("/{ticketId}")
 	public Ticket findATicket(@PathVariable int ticketId) throws RecordNotFoundException{	 //, AccessForbiddenException
 		Ticket t = null;

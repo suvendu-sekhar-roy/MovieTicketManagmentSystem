@@ -21,13 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 
- * @author Thejesh
- * @category ScreenController
- *
- */
-@CrossOrigin(origins = "http://localhost:4200")
+
+//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/screens")
 public class ScreenController {
@@ -37,15 +32,7 @@ public class ScreenController {
 	@Autowired
 	private ScreenService screenService;
 
-	/*
-	 * 
-	 * @param screen
-	 * @param theatreId
-	 * @return addedScreen
-	 * @throws AccessForbiddenException
-	 * @throws ScreenNotFoundException
-	 */
-	@PostMapping("/add")
+	@PostMapping("/addScreen")
 	public ResponseEntity<Screen> addAScreen(@RequestBody Screen screen,
 											 @RequestParam(required = false) Integer theatreId)
 			throws RecordNotFoundException {
@@ -54,54 +41,7 @@ public class ScreenController {
 		return ResponseEntity.ok(screenService.addScreen(screen, theatreId));
 	}
 
-	/*
-	 * 
-	 * @return screenList
-	 * @throws AccessForbiddenException
-	 * @throws ScreenNotFoundException
-	 */
-	@GetMapping("/findall")
-	public ResponseEntity<List<Screen>> viewScreenList() throws  RecordNotFoundException {
-
-		logger.info("-------List Of Screens Fetched Successfully---------");
-		return ResponseEntity.ok(screenService.viewScreenList());
-	}
-	
-	@GetMapping("/theatre/{screenId}")
-	public ResponseEntity<Theatre>  getTheatreById(@PathVariable int screenId) throws RecordNotFoundException {
-		ResponseEntity<Theatre> response = null;
-		try {
-			Theatre theatre = screenService.getTheatre(screenId);
-			response = new ResponseEntity<>(theatre, HttpStatus.OK);
-		} catch (Exception e) {
-			response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return response;
-	}
-	
-	@GetMapping("/viewScreen/{screenId}")
-	public ResponseEntity<Screen> viewScreen(@PathVariable int screenId)
-			throws RecordNotFoundException {
-		ResponseEntity<Screen> response = null;
-		try {
-			Screen screen = screenService.viewScreen(screenId);
-			response = new ResponseEntity<>(screen, HttpStatus.OK);
-			logger.info("-------Screen Found---------");
-		} catch (Exception e) {
-			response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			throw new RecordNotFoundException("Screen dosen't exist");
-		}
-		return response;
-	}
-	/*
-	 * 
-	 * @param s
-	 * @param theatreId
-	 * @return updatedScreen details
-	 * @throws AccessForbiddenException
-	 * @throws ScreenNotFoundException
-	 */
-	@PutMapping("/update")
+	@PutMapping("/updateScreen")
 	public ResponseEntity<Screen> updateScreen(@RequestBody Screen s, @RequestParam(required = false) Integer theatreId)
 			throws  RecordNotFoundException {
 
@@ -115,4 +55,39 @@ public class ScreenController {
 		}
 		return response;
 	}
+
+	@GetMapping("/showAll")
+	public ResponseEntity<List<Screen>> viewScreenList() throws  RecordNotFoundException {
+
+		logger.info("-------List Of Screens Fetched Successfully---------");
+		return ResponseEntity.ok(screenService.viewScreenList());
+	}
+	
+	@GetMapping("/viewTheatre/{screenId}")
+	public ResponseEntity<Theatre>  getTheatreById(@PathVariable int screenId) throws RecordNotFoundException {
+		ResponseEntity<Theatre> response = null;
+		try {
+			Theatre theatre = screenService.getTheatre(screenId);
+			response = new ResponseEntity<>(theatre, HttpStatus.OK);
+		} catch (Exception e) {
+			response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return response;
+	}
+	
+	@GetMapping("/viewScreenById/{screenId}")
+	public ResponseEntity<Screen> viewScreen(@PathVariable int screenId)
+			throws RecordNotFoundException {
+		ResponseEntity<Screen> response = null;
+		try {
+			Screen screen = screenService.viewScreen(screenId);
+			response = new ResponseEntity<>(screen, HttpStatus.OK);
+			logger.info("-------Screen Found---------");
+		} catch (Exception e) {
+			response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new RecordNotFoundException("Screen dosen't exist");
+		}
+		return response;
+	}
+
 }

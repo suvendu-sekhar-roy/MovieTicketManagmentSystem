@@ -18,11 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 
- * @author Surya
- *
- */
+
 //@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/seats")
@@ -31,17 +27,8 @@ public class SeatController {
 	Logger logger = LoggerFactory.getLogger(SeatController.class);
 	@Autowired
 	private SeatService seatService;
-	/*@Autowired
-	LoginController loginController;
-*/
-	/*
-	 * 
-	 * @param seat
-	 * @return seatDetails
-	 * @throws AccessForbiddenException
-	 * @throws SeatNotFoundException
-	 */
-	@PostMapping("/add")
+
+	@PostMapping("/addSeat")
 	public ResponseEntity<Seat> addASeat(@RequestBody Seat seat)
 			throws RecordNotFoundException {
 		//AccessForbiddenException,
@@ -50,30 +37,10 @@ public class SeatController {
 		return new ResponseEntity<>(seat, HttpStatus.CREATED);
 	}
 
-	/*
-	 * 
-	 * @return listOfSeats
-	 * @throws AccessForbiddenException
-	 * @throws SeatNotFoundException
-	 */
-	@GetMapping("/findall")
-	public ResponseEntity<List<Seat>> viewSeatList() throws  RecordNotFoundException { //AccessForbiddenException,
-		
-		logger.info("-------List of Seats Fetched Successfully---------");
-		return ResponseEntity.ok(seatService.viewSeatList());
-	}
-
-	/*
-	 * 
-	 * @param seat
-	 * @return updated seat
-	 * @throws AccessForbiddenException
-	 * @throws SeatNotFoundException
-	 */
-	@PutMapping("/update")
+	@PutMapping("/updateSeat")
 	public ResponseEntity<Seat> updateSeat(@RequestBody Seat seat)
 			throws RecordNotFoundException { //AccessForbiddenException,
-	
+
 		ResponseEntity<Seat> response = null;
 		if (seat == null) {
 			response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -85,13 +52,13 @@ public class SeatController {
 		return response;
 	}
 
-	/*
-	 * 
-	 * @param seat
-	 * @return booked seat
-	 * @throws AccessForbiddenException
-	 * @throws SeatNotFoundException
-	 */
+	@GetMapping("/showAll")
+	public ResponseEntity<List<Seat>> viewSeatList() throws  RecordNotFoundException { //AccessForbiddenException,
+		
+		logger.info("-------List of Seats Fetched Successfully---------");
+		return ResponseEntity.ok(seatService.viewSeatList());
+	}
+
 	@PutMapping("/book")
 	public ResponseEntity<Seat> BookASeat(@RequestBody Seat seat)
 			throws RecordNotFoundException {//AccessForbiddenException,
@@ -101,14 +68,8 @@ public class SeatController {
 		return new ResponseEntity<>(seat, HttpStatus.OK);
 	}
 
-	/*
-	 * 
-	 * @param seat
-	 * @return cancelled seat
-	 * @throws AccessForbiddenException
-	 * @throws SeatNotFoundException
-	 */
-	@PutMapping("/cancel")
+
+	@PutMapping("/cancelSeat")
 	public ResponseEntity<Seat> CancelASeat(@RequestBody Seat seat)
 			throws  RecordNotFoundException { //AccessForbiddenException,
 		
@@ -117,13 +78,7 @@ public class SeatController {
 		return new ResponseEntity<>(seat, HttpStatus.OK);
 	}
 
-	/*
-	 * 
-	 * @param seat
-	 * @return blocked seat
-	 * @throws AccessForbiddenException
-	 * @throws SeatNotFoundException
-	 */
+
 	@PutMapping("/block")
 	public ResponseEntity<Seat> BloclASeat(@RequestBody Seat seat)
 			throws  RecordNotFoundException { //AccessForbiddenException,

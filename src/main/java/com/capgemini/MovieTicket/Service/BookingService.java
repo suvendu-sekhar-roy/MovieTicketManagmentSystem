@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface BookingService {
-    public Booking addBooking(Booking booking);
+    public Booking addBooking(Booking booking,Integer customerId, Integer showId);
     public Booking updateBooking(Booking booking);
     public List<Booking> showAllBooking();
     public List<Booking> showBookingListbyDate(LocalDate date);

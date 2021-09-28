@@ -20,14 +20,18 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @PostMapping(value = "/newBooking")
-    public ResponseEntity<Booking> addTicketBooking(@RequestBody Booking booking){
-        //Also include movieid, theater id, showtime
+    //Generate a new Booking
+    @PostMapping(value = "/addBooking")
+    public ResponseEntity<Booking> addTicketBooking(@RequestBody Booking booking,
+                                                    @RequestParam(required = false) Integer customerId,
+                                                    @RequestParam(required = false) Integer showId){
+        //Also include movieid, theater id
         Booking bkList =null;
-        bkList = bookingService.addBooking(booking);
+        bkList = bookingService.addBooking(booking, customerId, showId);
         return new ResponseEntity<Booking>(bkList, HttpStatus.CREATED);
     }
 
+    //Update booking
     @PostMapping(value = "/updateBooking")
     @ExceptionHandler(RecordNotFoundException.class)
     public ResponseEntity<Booking> modifyBooking(@RequestBody Booking updateBooking) {
@@ -36,17 +40,28 @@ public class BookingController {
         return new ResponseEntity<Booking>(bkList, HttpStatus.OK);
     }
 
-    @GetMapping("/showAllBooking")
+    //show all booking
+    @GetMapping("/showAll")
     public List<Booking> showAll(){
         List<Booking> bkList = bookingService.showAllBooking();
         return bkList;
     }
-    @GetMapping("/byDate/{date}")
+
+    //show all booking of a particular Date
+    @GetMapping("/showByDate/{date}")
     public List<Booking> getBookingByDate(@PathVariable("date") LocalDate date){
         List<Booking> bkList = bookingService.showBookingListbyDate(date);
         return bkList;
     }
 
+    //Get total cost of a booking
+    @GetMapping("/cost/{bookingId}")
+    public double TotalBookingCost(@PathVariable int bookingId) throws RecordNotFoundException {
+
+        return bookingService.totalCost(bookingId);
+    }
+
+    //Cancel a booking
     @DeleteMapping("/cancelBooking/{bookingId}")
     @ExceptionHandler(RecordNotFoundException.class)
     public void deleteBookingByID(@PathVariable("bookingId") Integer bookingId) {

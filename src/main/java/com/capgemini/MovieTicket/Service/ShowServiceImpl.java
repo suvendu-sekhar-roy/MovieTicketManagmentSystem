@@ -25,8 +25,19 @@ public class ShowServiceImpl implements ShowService{
         @Autowired
         private ScreenRepository screenRepository;
         @Override
-        public Show addShow(Show show) {
-            return showRepository.save(show);
+        public Show addShow(Show show,Integer theatreId, Integer screenId) {
+            Theatre theatre = new Theatre();
+            Screen screen = new Screen();
+            if (theatreId != null) {
+                theatre = theatreRepository.getById(theatreId);
+                show.setTheatre(theatre);
+            }
+            if (screenId != null) {
+                screen = screenRepository.getById(screenId);
+                show.setScreen(screen);
+            }
+            showRepository.save(show);
+            return show;
         }
 
         @Override

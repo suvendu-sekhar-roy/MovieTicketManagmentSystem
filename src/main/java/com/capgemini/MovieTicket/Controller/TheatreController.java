@@ -31,42 +31,14 @@ public class TheatreController {
 	@Autowired
 	private TheatreService theatreservice;
 
-
-	/*
-	 * 
-	 * @return listOfTheatres
-	 * @throws AccessForbiddenException
-	 * @throws TheatreNotFoundException
-	 */
-	@GetMapping("/all")
-	public ResponseEntity<List<Theatre>> getAlltheatres() throws RecordNotFoundException {
-
-		logger.info("-------Theatre List Fetched---------");
-		return ResponseEntity.ok(theatreservice.getAllTheatres());
-	}
-
-	/*
-	 * 
-	 * @param t
-	 * @return inserted theatre
-	 * @throws AccessForbiddenException
-	 * @throws TheatreNotFoundException
-	 */
-	@PostMapping("/insert")
+	@PostMapping("/addTheatre")
 	public ResponseEntity<Theatre> addTheatre(@RequestBody Theatre t) throws RecordNotFoundException {
 
 		//logger.info("-------Theatre Added Successfully---------");
 		return new ResponseEntity<>(theatreservice.addTheatre(t), HttpStatus.CREATED);
 	}
 
-	/*
-	 * 
-	 * @param t
-	 * @return updated theatre
-	 * @throws AccessForbiddenException
-	 * @throws TheatreNotFoundException
-	 */
-	@PutMapping("/update")
+	@PutMapping("/updateTheatre")
 	public ResponseEntity<Theatre> updateTheatre(@RequestBody Theatre t) throws  RecordNotFoundException {
 
 		//logger.info("-------Theatre Updated Successfully---------");
@@ -74,14 +46,14 @@ public class TheatreController {
 		return new ResponseEntity<>(theatre, HttpStatus.CREATED);
 	}
 
-	/*
-	 * 
-	 * @param theatreId
-	 * @return theatre by theatreId
-	 * @throws AccessForbiddenException
-	 * @throws TheatreNotFoundException
-	 */
-	@GetMapping("/find/{theatreId}")
+	@GetMapping("/viewAll")
+	public ResponseEntity<List<Theatre>> getAlltheatres() throws RecordNotFoundException {
+
+		logger.info("-------Theatre List Fetched---------");
+		return ResponseEntity.ok(theatreservice.getAllTheatres());
+	}
+
+	@GetMapping("/viewById/{theatreId}")
 	public ResponseEntity<Theatre> findTheatre(@PathVariable int theatreId)
 			throws  RecordNotFoundException {
 
@@ -89,31 +61,22 @@ public class TheatreController {
 		return ResponseEntity.ok(theatreservice.findTheatres(theatreId));
 	}
 
-	/*
-	 * 
-	 * @param theatreId
-	 * @return deleted theatre
-	 * @throws AccessForbiddenException
-	 * @throws TheatreNotFoundException
-	 */
-	@DeleteMapping("/delete/{theatreId}")
-	public ResponseEntity<Theatre> deleteMoviesById(@PathVariable int theatreId) throws RecordNotFoundException {
-
-			Theatre theatre = theatreservice.findTheatres(theatreId);
-		if(theatre==null){
-			theatreservice.deleteTheatreById(theatreId);
-			return  new ResponseEntity<Theatre>(theatre, HttpStatus.OK);
-		}
-		//logger.info("-------Theatre Deleted with Theatre id" + theatreId + "---------");
-		else{
-			return  new ResponseEntity<Theatre>( HttpStatus.NOT_IMPLEMENTED);
-		}
-	}
-	
 	@GetMapping("/findbyMovie/{movieId}")
 	public ResponseEntity<List<Theatre>> findTheatreByMovieId(@PathVariable int movieId)
 			throws  RecordNotFoundException {
 		return ResponseEntity.ok(theatreservice.findTheatresByMovie(movieId));
 	}
-	
+
+	@DeleteMapping("/delete/{theatreId}")
+	public ResponseEntity<Theatre> deleteMoviesById(@PathVariable int theatreId) throws RecordNotFoundException {
+
+		Theatre theatre = theatreservice.findTheatres(theatreId);
+		if (theatre == null) {
+			theatreservice.deleteTheatreById(theatreId);
+			logger.info("-------Theatre Deleted with Theatre id" + theatreId + "---------");
+			return new ResponseEntity<Theatre>(theatre, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Theatre>(HttpStatus.NOT_IMPLEMENTED);
+		}
+	}
 }

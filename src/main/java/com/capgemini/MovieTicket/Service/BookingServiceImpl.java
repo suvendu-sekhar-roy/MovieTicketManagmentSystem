@@ -1,9 +1,7 @@
 package com.capgemini.MovieTicket.Service;
 
 import com.capgemini.MovieTicket.Exception.RecordNotFoundException;
-import com.capgemini.MovieTicket.Model.Booking;
-import com.capgemini.MovieTicket.Model.Seat;
-import com.capgemini.MovieTicket.Model.Ticket;
+import com.capgemini.MovieTicket.Model.*;
 import com.capgemini.MovieTicket.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,11 +28,22 @@ public class BookingServiceImpl implements BookingService {
     TicketRepository ticketRepository;
 
     @Override
-    public Booking addBooking(Booking newbooking) {
-        bookingRepository.save(newbooking);
-        //return bookingRepository.findById(newbooking.getTransactionId()).get();
+    public Booking addBooking(Booking newbooking,Integer customerId, Integer showId) {
+        Customer customer = new Customer();
+        Show show=new Show();
+        if(showId!=null) {
+            //customer = custoRepository.getOne(customerId);
+            show=showRepository.findById(showId).get();
+            show.setBooking(newbooking);
+            //booking.setCustomer(customer);
+            newbooking.setShow(show);
+        }
+        bookingRepository.saveAndFlush(newbooking);
+        showRepository.saveAndFlush(show);
         return newbooking;
-    }
+
+
+}
 
     @Override
     public Booking updateBooking(Booking changedBooking) {

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface ShowService {
-    public Show addShow(Show show);
+    public Show addShow(Show show,Integer theatreId, Integer screenId);
 
     public Show updateShow(Show show,Integer theatreId, Integer screenId);
 
