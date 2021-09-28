@@ -20,6 +20,7 @@ public class Screen {
 	@ManyToOne
 	private Theatre theatre;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "screen",cascade = CascadeType.ALL)
 	private List<Show> show;
 

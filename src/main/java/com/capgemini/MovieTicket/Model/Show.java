@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
     @Table(name = "show")
     public class Show {
         @Id
-        //@Column(name = "id", nullable = false)
+
         @GeneratedValue(strategy = GenerationType.AUTO)
         private int showId;
 

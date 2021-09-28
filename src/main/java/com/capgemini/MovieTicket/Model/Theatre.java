@@ -21,6 +21,7 @@ public class Theatre {
 	private String managerName;
 	private String managerContact;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "theatre",cascade = CascadeType.ALL)
 	private List<Screen> screen;
 
