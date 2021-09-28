@@ -34,14 +34,14 @@ public class TheatreController {
 	@PostMapping("/addTheatre")
 	public ResponseEntity<Theatre> addTheatre(@RequestBody Theatre t) throws RecordNotFoundException {
 
-		//logger.info("-------Theatre Added Successfully---------");
+		logger.info("-------Theatre Added Successfully---------");
 		return new ResponseEntity<>(theatreservice.addTheatre(t), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/updateTheatre")
 	public ResponseEntity<Theatre> updateTheatre(@RequestBody Theatre t) throws  RecordNotFoundException {
 
-		//logger.info("-------Theatre Updated Successfully---------");
+		logger.info("-------Theatre Updated Successfully---------");
 		Theatre theatre= theatreservice.updateTheatre(t);
 		return new ResponseEntity<>(theatre, HttpStatus.CREATED);
 	}
